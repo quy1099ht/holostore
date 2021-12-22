@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatiable" content="IE=edge">
+    <meta name="viewport" content="width=device-with, initial-scale=1.0">
+    <title>Translator</title>
+
+    <link rel="icon" href="img\holo_icon.jpg" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <style>
+        #cart-container table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #cart-container table thead {
+            font-weight: 700;
+        }
+
+        #cart-container table thead td {
+            background: skyblue;
+            color: #fff;
+            border: none;
+            padding: 6px 0;
+        }
+
+        #cart-container table td {
+            border: 1px solid #b6b3b3;
+            text-align: center;
+        }
+
+        #cart-container table td:nth-child(1) {
+            width: 100px;
+        }
+
+        #cart-container table td:nth-child(2),
+        #cart-container table td:nth-child(3) {
+            width: 200px;
+        }
+
+        #cart-container table td:nth-child(4),
+        #cart-container table td:nth-child(5),
+        #cart-container table td:nth-child(6) {
+            width: 170px;
+        }
+
+        #cart-container table tbody img {
+            width: 100px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        #cart-container table tbody i {
+            color: #8d8c89;
+        }
+
+        #cart-bottom .coupon>div,
+        #cart-bottom .total>div {
+            border: 1px solid #b6b3b3
+        }
+
+        #cart-bottom .coupon h5,
+        #cart-bottom .total h5 {
+            background: skyblue;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            font-weight: 700;
+        }
+
+        #cart-bottom .coupon p,
+        #cart-bottom .coupon input {
+            padding: 0 12px;
+        }
+
+        #cart-bottom .coupon input {
+            height: 44px;
+        }
+
+        #cart-bottom .coupon input {
+            margin: 0 0 20px 12px;
+        }
+
+        #cart-bottom .total div>div {
+            padding: 0 12px;
+        }
+
+        #cart-bottom .total h6 {
+            color: black;
+        }
+
+        .second-hr {
+            background: #b6b3b3;
+            width: 100%;
+            height: 1px;
+        }
+
+        #cart-bottom .total div>button {
+            margin: 0 12px 20px 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #cart-container table {
+            overflow-x: auto;
+        }
+
+    </style>
+    <style>
+        .section-divider {
+            display: inline-block;
+            width: 45%;
+            border: 2px solid lightblue;
+            padding: 5px 10px;
+            vertical-align: top;
+            height: 500px;
+        }
+
+        .section-divider * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .section-divider h2 {
+            font-size: 2em;
+            border-bottom: 2px solid lightblue;
+            margin-bottom: 15px;
+            margin-left: -10px;
+            margin-right: -10px;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .section-divider textarea {
+            width: 90%;
+            height: 250px;
+            resize: none;
+            font-size: 2em;
+            padding: 5px 10px;
+        }
+
+        select {
+            height: auto;
+            vertical-align: middle;
+            font-size: inherit;
+        }
+
+        button,
+        input[type=button] {
+            padding: 0 5px !important;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+        <div class="container">
+            <img src="img/Webp.net-resizeimage.png" alt="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span><i id="bar" class="fas fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/homes">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Product</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Others
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="https://en.hololive.tv/goods">Real Shop</a></li>
+                            <li><a class="dropdown-item" href="/promote">Promote</a></li>
+                            <li><a class="dropdown-item" href="/translator">Translator</a></li>
+                            <li><a class="dropdown-item" href="/about">Developer</a></li>
+                            <li><a class="dropdown-item" rel="noopener noreferrer" target="_blank" href="/calculator">Calculator</a></li>
+                        </ul>
+                    </li>
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">{{username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="fas fa-shipping-fast" style="color: inherit" href="/cart"></a>
+                    </li>
+                    {% endif %}
+
+                    {% if user is None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {% endif %}
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="d-flex" method="get" action="/search">
+                    <input class="form-control me-2" id="search" name="sname" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" id="searchBtn" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <br><br><br>
+    <!--Translator-->
+    <section class="" style="margin-left: 100px; border: lightblue;">
+
+
+        <section class="section-divider">
+            <h2 style="color:lightskyblue;">From</h2><br><br>
+            <select id="convert-from" style="border: 2px solid lightskyblue;">
+                <option>en (English)</option>
+                <option>vi (Vietnamese)</option>
+                <option>ru (Russian)</option>
+                <option>fr (French)</option>
+            </select>
+            <button id="record"><i class="fas fa-microphone"></i></button>
+            <br><br>
+            <textarea class="section-divider" id="textarea-from"></textarea><br><br>
+            <button id="btn-convert-text" style="font-size: 16px;">Translate</button><br>
+        </section>
+
+        <section class="section-divider">
+            <h2 style="color:lightsalmon;">To</h2><br><br>
+            <select id="convert-into" style="border: 2px solid lightskyblue;">
+                <option>vi (Vietnamese)</option>
+                <option>en (English)</option>
+                <option>ru (Russian)</option>
+                <option>fr (French)</option>
+            </select>
+            <button id="speaker"><i class='fas fa-headphones'></i></button>
+            <br><br>
+            <textarea id="textarea-to" disabled
+                style="background: #f9f9f9!important;border: 1px solid #f7f1f1;cursor: not-allowed;"
+                title="Output! ReadOnly!"></textarea>
+            <br>
+        </section>
+        <h1 id="test"></h1>
+        <br><br><br>
+        <br><br><br>
+    <!--FOOTER-->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-facebook-f"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-linkedin-in"></i></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-github"></i></a>
+            </section>
+            <!-- Section: Social media -->
+
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+                    「ホロライブプロダクション」に関するご質問 所属VTuberへのお仕事のご依頼や 当社への提携のご相談などを 受け付けております。下記のフォームにご入力のうえ送信してください。
+                </p>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-EN</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCL_qhgtOy0dy1Agp8vkySQg"
+                                    class="text-white">Calliope Mori</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww"
+                                    class="text-white">Takanashi Kiara</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g"
+                                    class="text-white">Gawr Gura</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
+                                    class="text-white">Ninomae Ina'nis</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCyl1z3jo3XHR1riLFKG5UAg"
+                                    class="text-white">Watson Amelia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g"
+                                    class="text-white">███████ Irys. </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 1</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCp6993wxpyDPHUpavwDFqgg" class="text-white">Tokino Sora </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCDqI2jOz0weumE8s7paEk6g" class="text-white">Roboco-san</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC-hM6YJuNYVAmUWxeIr9FeA" class="text-white">Sakura Miko</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A" class="text-white">Hoshimachi Suisei</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC0TXe_LYZ4scaW2XMyi5_kw" class="text-white">AZKi</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 3</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ" class="text-white">Usada Pekora</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCl_gCybOJRIgOXw6Qb4qJzQ" class="text-white">Uruha Rushia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCvInZx9h3jC2JzsIzoOebWg" class="text-white">Shiranui Flare</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCdyqAaZDKHXg4Ahi7VENThQ" class="text-white">Shirogane Noel</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCCzUftO8KOVkV4wQG1vkUvg" class="text-white">Houshou Marine</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 4</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCZlDXzGoo7d44bwdNObFacg" class="text-white">Amane Kanata</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA" class="text-white">Tsunomaki Watame</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw" class="text-white">Tokoyami Towa</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCa9Y57gfeY0Zro_noHRVrnw" class="text-white">Himemori Luna</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCS9uQI-jC3DE0L4IpXyvr6w" class="text-white">Kiryu Coco</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                   
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/"> HololiveProject</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+            integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+            crossorigin="anonymous"></script>
+        </script>
+        <script>
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+            var grammar = '#JSGF V1.0;'
+
+            var recognition = new SpeechRecognition();
+            var speechRecognitionList = new SpeechGrammarList();
+            speechRecognitionList.addFromString(grammar, 1);
+            recognition.grammars = speechRecognitionList;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.continuous = true;
+
+            recognition.onresult = function (event) {
+                var last = event.results.length - 1;
+                var command = event.results[last][0].transcript;
+                if (command.trim() == "restart") {
+
+                    document.getElementById("textarea-from").value = ""
+                }
+                else {
+                    console.log(command)
+                    document.getElementById("textarea-from").value += command
+                }
+            };
+
+            recognition.onspeechend = function () {
+                console.log("end")
+            };
+
+            recognition.onerror = function (event) {
+
+            }
+            var state = true
+            document.getElementById('record').addEventListener('click', function () {
+                if (state) {
+                    alert("Click the recoder again to turn off!")
+                    recognition.start();
+                    state = false
+                }
+                else {
+                    recognition.stop();
+                    state = true
+                }
+            });
+
+        </script>
+        <script>
+            selector = document.getElementById("convert-from")
+            selector.onchange = () => {
+                if (selector.value == "en (English)") {
+                    document.getElementById("record").hidden = false
+                }
+                else {
+                    document.getElementById("record").hidden = true
+                }
+            }
+        </script>
+        <script>
+            function get_language() {
+                lang = document.getElementById("convert-from").value
+                lang = lang.substring(0, 2)
+                return lang
+            }
+            function get_language2() {
+                lang = document.getElementById("convert-into").value
+                lang = lang.substring(0, 2)
+                return lang
+            }
+            var button = document.getElementById("btn-convert-text").onclick = async () => {
+                var text = document.getElementById("textarea-from");
+                console.log();
+                var url = "http://127.0.0.1:8000/api/translator?words=" + text.value + "&lang=" + get_language() + "&toLang=" + get_language2();
+                const res = await fetch(url);
+                const resJson = await res.json();
+                result = document.getElementById("textarea-to");
+                result.value = resJson['result'];
+            }
+            document.getElementById("speaker").onclick = () => {
+                result = document.getElementById("textarea-to").value;
+                speak(result)
+                console.log("Ol");
+            }
+            function speak(message) {
+                var msg = new SpeechSynthesisUtterance(message)
+                
+                window.speechSynthesis.speak(msg)
+            }
+        </script>
+</body>
+
+</html>

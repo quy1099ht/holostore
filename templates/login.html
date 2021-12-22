@@ -1,0 +1,349 @@
+<html>
+
+<head>
+    <title>Login and Register</title>
+    <link rel="icon" href="img\holo_icon.jpg" type="image/x-icon">
+
+    <link rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .hero {
+            height: 100%;
+            width: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(img/login-img/loginBackground.jpg);
+            background-position: center;
+            background-size: cover;
+            position: absolute;
+        }
+
+        .form-box {
+            width: 380px;
+            height: 480px;
+            position: relative;
+            margin: 6% auto;
+            background: #fff;
+            padding: 5px;
+            overflow: hidden;
+        }
+
+        .button-box {
+            width: 220px;
+            margin: 35px auto;
+            position: relative;
+            box-shadow: 0 0 20px 9px #ff61241f;
+            border-radius: 30px;
+        }
+
+        .toggle-btn {
+            padding: 10px 30px;
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            outline: none;
+            position: relative;
+        }
+
+        #btn {
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 110px;
+            height: 100%;
+            background: linear-gradient(to right, #ff105f, #ffad06);
+            border-radius: 30px;
+            transition: .5s;
+        }
+
+        .social-icons {
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .social-icons img {
+            width: 30px;
+            margin: 0 12px;
+            box-shadow: 0 0 20px 0 #7f7f7f3d;
+            cursor: pointer;
+            border-radius: 50px;
+        }
+
+        .input-group {
+            top: 180px;
+            position: absolute;
+            width: 280px;
+            transition: .5s;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 0;
+            margin: 5px 0;
+            border-left: 0;
+            border-top: 0;
+            border-right: 0;
+            border-bottom: 1px solid #999;
+            outline: none;
+            background: transparent;
+        }
+
+        .submit-btn {
+            width: 85%;
+            padding: 10px 30px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+            background: linear-gradient(to right, #ff105f, #ffad06);
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            color: white;
+        }
+
+        .check-box {
+            margin: 30px 10px 30px 0;
+        }
+
+        .span {
+            color: #777;
+            font-size: 12px;
+            bottom: 68px;
+            position: absolute;
+        }
+
+        #login {
+            left: 50px;
+        }
+
+        #register {
+            left: 450px;
+        }
+
+        .forgot-btn {
+            width: 70%;
+            padding: 10px 30px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+            background: linear-gradient(to right, #ff105f, #ffad06);
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="login()">Log in</button>
+                <button type="button" class="toggle-btn" onclick="register()">Register</button>
+            </div>
+            <div class="social-icons">
+                <img src="img/login-img/fb.png">
+                <img src="img/login-img/tw.png">
+                <img src="img/login-img/gp.png">
+            </div>
+            <form id="login" class="input-group" method="post" action="/login">
+                {% csrf_token %}
+                <input type="text" class="input-field" name="user" id="user" placeholder="User Id" required>
+                <p id="u" style="color: #ff105f; display: none;">Wrong Username</p>
+                <input type="password" class="input-field" name="pass" id="passwrd" placeholder="Password" required>
+                <p id="pass" style="color: #ff105f; display: none;">Wrong Password</p>
+                <input type="checkbox" class="check-box"><span>Remember Password</span>
+                </br>
+                <button type="button" class="forgot-btn">Forgot Password</button>
+                </br>
+                <button type="submit" class="submit-btn">Log in</button>
+            </form>
+            <form id="register" class="input-group" method="POST" action="/register">
+                {% csrf_token %}
+                <input type="text" class="input-field" name="user" placeholder="User Id" required>
+                <input type="text" class="input-field" name="name" placeholder="Name" required>
+                <input type="email" class="input-field" name="email" placeholder="Email Id" required>
+                <input type="password" class="input-field" id="psw" name="password" pattern="(?=.*\d)(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and at least 8 or more characters"
+                    placeholder="Password" required>
+                <input type="checkbox" class="check-box"><span>I agree to the terms and conditions</span>
+                <button type="submit" class="submit-btn">Register</button>
+            </form>
+        </div>
+    </div>
+    {% if fail %}
+    <script>
+        setTimeout(() => {
+            alert("Your username or your password was incorrect!!")
+        }, 400)
+    </script>
+    {% endif %}
+    {% if exist %}
+    <script>
+        setTimeout(() => {
+            alert("This username has already been use!!")
+        }, 400)
+    </script>
+    {% endif %}
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+
+        function register() {
+            x.style.left = "-400px"
+            y.style.left = "50px"
+            z.style.left = "110px"
+        }
+
+        function login() {
+            x.style.left = "50px"
+            y.style.left = "450px"
+            z.style.left = "0"
+        }
+
+    </script>
+    <script>
+        // form = document.getElementById("login")
+        // username = document.getElementById('user').value
+        // password = document.getElementById('passwrd').value
+        // form.addEventListener("submit",  (event) => {
+
+        //     event.preventDefault()
+        // })
+
+        // async function fetchLogin(username,password) {
+        //     var url = "http://127.0.0.1:8000/api/checkLogin?username=" + username + "&password=" + password;
+        //         const res = await fetch(url);
+        //         const resJson = await res.json();
+        // }
+    </script>
+    <script>
+        var myInput = document.getElementById("psw");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+        myInput.onkeyup = function () {
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            // Validate length
+            if (myInput.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+        }
+
+
+    </script>
+    <script defer>
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+        var grammar = '#JSGF V1.0;'
+
+        var recognition = new SpeechRecognition();
+        var speechRecognitionList = new SpeechGrammarList();
+        speechRecognitionList.addFromString(grammar, 1);
+        recognition.grammars = speechRecognitionList;
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.continuous = true;
+
+        recognition.onresult = function (event) {
+            var last = event.results.length - 1;
+            var command = event.results[last][0].transcript;
+            arr = command.split(" ")
+            arr2 = command.split("")
+            console.log(arr2[0]);
+            if (command.trim() == "end") {
+                recognition.stop()
+            }
+            else if (command.trim() == "home") {
+                window.location = "/homes"
+            }
+            else if (command.trim() == "products") {
+                window.location = "/products"
+            }
+            else if (command.trim() == "cart") {
+                window.location = "/cart"
+            }
+            else if (command.trim() == "profile") {
+                window.location = "/user"
+            }
+            else if (command.trim() == "login") {
+                window.location = "/login"
+            }
+            else if (command.trim() == "about") {
+                window.location = "/about"
+            }
+            else if (arr[0] == "search") {
+                console.log(arr[0])
+                console.log(arr.length)
+                if (arr.length <= 2) {
+                    document.getElementById("search").value = arr[1]
+                }
+                else {
+                    search = ""
+                    for (let index = 1; index < arr.length; index++) {
+                        if (index == arr.length - 1) {
+
+                        }
+                        else {
+                            search += " " + arr[index]
+                        }
+
+                    }
+                    console.log(search);
+                    document.getElementById("search").value = search
+
+                }
+                //document.getElementById("searchBtn").click()
+            }
+            else {
+                console.log(command)
+            }
+        };
+
+        recognition.onspeechend = function () {
+            console.log("end")
+        };
+
+        recognition.onerror = function (event) {
+
+        }
+        function Recording() {
+            recognition.start()
+        }
+        window.onload = Recording()
+    </script>
+</body>
+
+</html>

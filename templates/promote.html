@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatiable" content="IE=edge">
+    <meta name="viewport" content="width=device-with, initial-scale=1.0">
+    <title>Promoting IDOLS</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <Style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .container1 {
+            width: 80%;
+            margin: 80px auto;
+        }
+
+        .container1 h1{
+            padding: 60px 0;
+            color:skyblue;
+            font-size: 44px;
+            text-align: center;
+        }
+
+        .row{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex-basis: 50%;
+            min-width: 250px;
+        }
+
+        .feature-img{
+            width: 83%;
+            margin: auto;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .small-img-row {
+            display: flex;
+            background: skyblue;
+            margin: 20px 0;
+            align-items: center;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 85%;
+            color: white;
+            text-align: center;
+        }
+
+        .small-img{
+            position: relative;
+        }
+
+        .small-img img{
+            width: 150px;
+        }
+
+        .small-img-row p{
+            margin-left: 20px;
+            line-height: 22px;
+            font-size: 15px;
+        }
+
+        .play-btn{
+            width: 60px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .small-img .play-btn{
+            width: 35px;
+        }
+
+        .video-player{
+            width: 80%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        video:focus{
+            outline: none;
+        }
+
+        .close-btn{
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+    </Style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+        <div class="container">
+            <img src="img/Webp.net-resizeimage.png" alt="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span><i id="bar" class="fas fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/homes">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Product</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Others
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="https://en.hololive.tv/goods">Real Shop</a></li>
+                            <li><a class="dropdown-item" href="/promote">Promote</a></li>
+                            <li><a class="dropdown-item" href="/translator">Translator</a></li>
+                            <li><a class="dropdown-item" href="/about">Developer</a></li>
+                            <li><a class="dropdown-item" rel="noopener noreferrer" target="_blank" href="/calculator">Calculator</a></li>
+                        </ul>
+                    </li>
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">{{username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="fas fa-shipping-fast" style="color: inherit" href="/cart"></a>
+                    </li>
+                    {% endif %}
+
+                    {% if user is None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {% endif %}
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="d-flex" method="get" action="/search">
+                    <input class="form-control me-2" id="search" name="sname" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" id="searchBtn" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <!-- PROMOTION VIDEO SECTION-->
+    <div class="container1">
+        <h1>CHECK OUT OUR LATEST PROMOTION VIDEO FROM OUR AMAZING IDOLS</h1>
+        <div class="row">
+            <div class="col">
+                <div class="feature-img">
+                    <img src="img/vid/ogp_alt.png" width="100%">
+                    <img src="img/vid/play.png" class="play-btn" onclick="playVideo('img/vid/[hololive Alternative] Teaser PV (full ver.).mp4')">
+                </div>
+            </div>
+            <div class="col">
+                <div class="small-img-row">
+                    <div class="small-img">
+                        <img src="img/vid/download (3).jfif">
+                        <img src="img/vid/play.png" class="play-btn" onclick="playVideo('img/vid/フォニイ _ 星街すいせい(Cover).mp4')">
+                    </div>
+                    <P>Sui chan wa kyou mo kawaii</P>
+                </div>
+                <div class="small-img-row">
+                    <div class="small-img">
+                        <img src="img/vid/download (1).jfif">
+                        <img src="img/vid/play.png" class="play-btn" onclick="playVideo('img/vid/Say!ファンファーレ!_白上フブキ【オリジナル曲】.mp4')">
+                    </div>
+                    <p>fubuki no waifu just friend</p>
+                </div>
+                <div class="small-img-row">
+                    <div class="small-img">
+                        <img src="img/vid/download (2).jfif">
+                        <img src="img/vid/play.png" class="play-btn" onclick="playVideo('img/vid/【MV】ぺこらんだむぶれいん！【ホロライブ_兎田ぺこら】.mp4')">
+                    </div>
+                    <p>Pekora lmao</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="video-player" id="videoPlayer">
+        <video width="100%" controls autoplay id="myVideo">
+            <source src="img/vid/[hololive Alternative] Teaser PV (full ver.).mp4" type="video/mp4">
+        </video>
+        <img src="img/vid/close.png" class="close-btn" onclick="stopVideo()">
+    </div>
+
+    <script>
+        var videoPlayer = document.getElementById("videoPlayer");
+        var myVideo = document.getElementById("myVideo");
+
+        function stopVideo(){
+            videoPlayer.style.display = "none";
+        }
+
+        function playVideo(file){
+            myVideo.src = file;
+            videoPlayer.style.display = "block";
+        }
+    </script>
+
+    <!--FOOTER-->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-facebook-f"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-linkedin-in"></i></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-github"></i></a>
+            </section>
+            <!-- Section: Social media -->
+
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+                    「ホロライブプロダクション」に関するご質問 所属VTuberへのお仕事のご依頼や 当社への提携のご相談などを 受け付けております。下記のフォームにご入力のうえ送信してください。
+                </p>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-EN</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCL_qhgtOy0dy1Agp8vkySQg"
+                                    class="text-white">Calliope Mori</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww"
+                                    class="text-white">Takanashi Kiara</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g"
+                                    class="text-white">Gawr Gura</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
+                                    class="text-white">Ninomae Ina'nis</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCyl1z3jo3XHR1riLFKG5UAg"
+                                    class="text-white">Watson Amelia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g"
+                                    class="text-white">███████ Irys. </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 1</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCp6993wxpyDPHUpavwDFqgg" class="text-white">Tokino Sora </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCDqI2jOz0weumE8s7paEk6g" class="text-white">Roboco-san</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC-hM6YJuNYVAmUWxeIr9FeA" class="text-white">Sakura Miko</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A" class="text-white">Hoshimachi Suisei</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC0TXe_LYZ4scaW2XMyi5_kw" class="text-white">AZKi</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 3</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ" class="text-white">Usada Pekora</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCl_gCybOJRIgOXw6Qb4qJzQ" class="text-white">Uruha Rushia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCvInZx9h3jC2JzsIzoOebWg" class="text-white">Shiranui Flare</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCdyqAaZDKHXg4Ahi7VENThQ" class="text-white">Shirogane Noel</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCCzUftO8KOVkV4wQG1vkUvg" class="text-white">Houshou Marine</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 4</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCZlDXzGoo7d44bwdNObFacg" class="text-white">Amane Kanata</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA" class="text-white">Tsunomaki Watame</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw" class="text-white">Tokoyami Towa</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCa9Y57gfeY0Zro_noHRVrnw" class="text-white">Himemori Luna</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCS9uQI-jC3DE0L4IpXyvr6w" class="text-white">Kiryu Coco</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                   
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/"> HololiveProject</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

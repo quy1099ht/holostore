@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatiable" content="IE=edge">
+    <meta name="viewport" content="width=device-with, initial-scale=1.0">
+    <title>Your Shop Cart</title>
+
+    <link rel="icon" href="img\holo_icon.jpg" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <style>
+        #cart-container table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #cart-container table thead {
+            font-weight: 700;
+        }
+
+        #cart-container table thead td {
+            background: skyblue;
+            color: #fff;
+            border: none;
+            padding: 6px 0;
+        }
+
+        #cart-container table td {
+            border: 1px solid #b6b3b3;
+            text-align: center;
+        }
+
+        #cart-container table td:nth-child(1) {
+            width: 100px;
+        }
+
+        #cart-container table td:nth-child(2),
+        #cart-container table td:nth-child(3) {
+            width: 200px;
+        }
+
+        #cart-container table td:nth-child(4),
+        #cart-container table td:nth-child(5),
+        #cart-container table td:nth-child(6) {
+            width: 170px;
+        }
+
+        #cart-container table tbody img {
+            width: 100px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        #cart-container table tbody i {
+            color: #8d8c89;
+        }
+
+        #cart-bottom .coupon>div,
+        #cart-bottom .total>div {
+            border: 1px solid #b6b3b3
+        }
+
+        #cart-bottom .coupon h5,
+        #cart-bottom .total h5 {
+            background: skyblue;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            font-weight: 700;
+        }
+
+        #cart-bottom .coupon p,
+        #cart-bottom .coupon input {
+            padding: 0 12px;
+        }
+
+        #cart-bottom .coupon input {
+            height: 44px;
+        }
+
+        #cart-bottom .coupon input {
+            margin: 0 0 20px 12px;
+        }
+
+        #cart-bottom .total div>div {
+            padding: 0 12px;
+        }
+
+        #cart-bottom .total h6 {
+            color: black;
+        }
+
+        .second-hr {
+            background: #b6b3b3;
+            width: 100%;
+            height: 1px;
+        }
+
+        #cart-bottom .total div>button {
+            margin: 0 12px 20px 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #cart-container table {
+            overflow-x: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--SHOPPING CART-->
+    <section id="blog-home" class="pt-5 mt-5 container">
+        <h2 class="font-weight-bold pt-5">Shopping cart</h2>
+        <hr>
+    </section>
+
+    <section id="cart-container" class="container my-5">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Remove</td>
+                    <td>Image</td>
+                    <td>Product</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <table id="myTable">
+                    {% for cart in carts %}
+                    <tr>
+                        <td>
+                            <div onclick="deleteRow(this)">
+                                <a href="#"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </td>
+                        <td><img src="{{ cart.img_url }}" alt=""></td>
+                        <td>
+                            <h5>
+                                {{cart.item}}
+                            </h5>
+                        </td>
+                        <td>
+                            <h5 id="Price">{{cart.price}}</h5>
+                        </td>
+                        <td><input class="w-25 pl-1" value="{{cart.quantity}}" type="number" disabled id="Quantity">
+                        </td>
+                        <td>
+                            <h5 id="total_price_item">1</h5>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </tbody>
+        </table>
+    </section>
+    <!--COUPON SECTION-->
+    <section id="cart-bottom" class="container">
+        <div class="row">
+            <div class="coupon col-lg-6 col-md-6 col-12 mb-4">
+                <div>
+                    <h5>COUPON</h5>
+                    <p>Enter your coupon code if you have one!
+                    </p>
+                    <input id="coupon_code" type="text" placeholder="Coupon code">
+                    <button id="coupon">APPLY COUPON</button>
+                </div>
+            </div>
+            <form class="total col-lg-6 col-md-6 col-12" method="post" action="/check_out">
+                {% csrf_token %}
+                <div>
+                    <h5>CART TOTAL</h5>
+                    <div class="d-flex justify-content-between">
+                        <h6>Subtotal</h6>
+                        <p id="subtotal">$0</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6>Discount</h6>
+                        <p id="discount">$0.00</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6>Shipping</h6>
+                        <p id="shiping">$3.00</p>
+                    </div>
+                    <hr class="second-hr">
+                    <div class="d-flex justify-content-between">
+                        <h6>Total</h6>
+                        <p id="total">$300.00</p>
+                    </div>
+                    <input type="text" name="total_price" id="total2" value="" hidden>
+                    <button class="ml-auto">PROCESS TO CHEK OUT</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+        <div class="container">
+            <img src="img/Webp.net-resizeimage.png" alt="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span><i id="bar" class="fas fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/homes">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Product</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Others
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="https://en.hololive.tv/goods">Real Shop</a></li>
+                            <li><a class="dropdown-item" href="/promote">Promote</a></li>
+                            <li><a class="dropdown-item" href="/translator">Translator</a></li>
+                            <li><a class="dropdown-item" href="/about">Developer</a></li>
+                            <li><a class="dropdown-item" rel="noopener noreferrer" target="_blank" href="/calculator">Calculator</a></li>
+                        </ul>
+                    </li>
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">{{username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="fas fa-shipping-fast" style="color: inherit" href="/cart"></a>
+                    </li>
+                    {% endif %}
+
+                    {% if user is None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {% endif %}
+                    {% if user is not None %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="d-flex" method="get" action="/search">
+                    <input class="form-control me-2" id="search" name="sname" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" id="searchBtn" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!--FOOTER-->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-facebook-f"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-linkedin-in"></i></a>
+
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-github"></i></a>
+            </section>
+            <!-- Section: Social media -->
+
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example21" class="form-control" />
+                                <label class="form-label" for="form5Example21">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+                    「ホロライブプロダクション」に関するご質問 所属VTuberへのお仕事のご依頼や 当社への提携のご相談などを 受け付けております。下記のフォームにご入力のうえ送信してください。
+                </p>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-EN</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCL_qhgtOy0dy1Agp8vkySQg"
+                                    class="text-white">Calliope Mori</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCHsx4Hqa-1ORjQTh9TYDhww"
+                                    class="text-white">Takanashi Kiara</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCoSrY_IQQVpmIRZ9Xf-y93g"
+                                    class="text-white">Gawr Gura</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCMwGHR0BTZuLsmjY_NT5Pwg"
+                                    class="text-white">Ninomae Ina'nis</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCyl1z3jo3XHR1riLFKG5UAg"
+                                    class="text-white">Watson Amelia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC8rcEBzJSleTkf_-agPM20g"
+                                    class="text-white">███████ Irys. </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 1</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCp6993wxpyDPHUpavwDFqgg" class="text-white">Tokino Sora </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCDqI2jOz0weumE8s7paEk6g" class="text-white">Roboco-san</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC-hM6YJuNYVAmUWxeIr9FeA" class="text-white">Sakura Miko</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC5CwaMl1eIgY8h02uZw7u8A" class="text-white">Hoshimachi Suisei</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC0TXe_LYZ4scaW2XMyi5_kw" class="text-white">AZKi</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 3</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1DCedRgGHBdm81E1llLhOQ" class="text-white">Usada Pekora</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCl_gCybOJRIgOXw6Qb4qJzQ" class="text-white">Uruha Rushia</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCvInZx9h3jC2JzsIzoOebWg" class="text-white">Shiranui Flare</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCdyqAaZDKHXg4Ahi7VENThQ" class="text-white">Shirogane Noel</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCCzUftO8KOVkV4wQG1vkUvg" class="text-white">Houshou Marine</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Holo-JP Gen 4</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCZlDXzGoo7d44bwdNObFacg" class="text-white">Amane Kanata</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCqm3BQLlJfvkTsX_hvm0UmA" class="text-white">Tsunomaki Watame</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw" class="text-white">Tokoyami Towa</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCa9Y57gfeY0Zro_noHRVrnw" class="text-white">Himemori Luna</a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCS9uQI-jC3DE0L4IpXyvr6w" class="text-white">Kiryu Coco</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                   
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/"> HololiveProject</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <script>
+        function deleteRow(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            row = document.getElementById("myTable").rows[i]
+            pname = row.cells[2].textContent
+            price = row.cells[3].textContent
+            fetchDelete(pname.trim(), price.trim())
+            document.getElementById("myTable").deleteRow(i);
+        }
+        async function fetchDelete(name, price) {
+            var url = "http://127.0.0.1:8000/api/cart?pname=" + name;
+            const res = await fetch(url);
+            const resJson = await res.json();
+            response = resJson['response']
+            Total_CartPrice()
+        }
+        // var Quantity = document.getElementById("Quantity").value;
+
+
+        window.onload = Total_CartPrice()
+
+
+        function Total_CartPrice() {
+            var total_cart_price = 0;
+            //Item total price
+            for (let i = 0; i < document.getElementById("myTable").rows.length; i++) {
+                row = document.getElementById("myTable").rows[i]
+                price = row.cells[3].textContent
+                quantity = Get_Quantity(row.cells[4].innerHTML)
+                row.cells[5].innerHTML = price * quantity
+                total_item_price = parseFloat(row.cells[5].innerHTML)
+                total_cart_price += total_item_price
+            }
+            Total(total_cart_price)
+
+        }
+
+        function Total(total_price) {
+            //Subtotal
+            document.getElementById('subtotal').innerHTML = "$" + total_price
+            //Discount
+            discount = document.getElementById('discount').innerHTML.replace('$', '')
+            //Shiping
+            shiping = document.getElementById('shiping').innerHTML.replace('$', '')
+
+
+            total = total_price - parseFloat(discount) - parseFloat(shiping)
+            document.getElementById('total').innerHTML = "$" + total
+            document.getElementById('total2').value = total
+        }
+
+        function Get_Quantity(cell) {
+            quanHtml = cell
+            quan1 = quanHtml.replace('<input class="w-25 pl-1" value="', '')
+            quantity = quan1.replace('" type="number" disabled="" id="Quantity">', '')
+            return quantity
+        }
+
+
+    </script>
+    <script>
+        document.getElementById("coupon").addEventListener('click', Apply_Coupon)
+        async function Apply_Coupon() {
+            code = document.getElementById("coupon_code").value
+            subtotal = document.getElementById('subtotal').innerHTML.replace('$', '')
+            document.getElementById('discount').innerHTML = "$" + await fetchCoupon(code, subtotal)
+            Total_CartPrice()
+        }
+
+        async function fetchCoupon(code, subtotal) {
+            var url = "http://127.0.0.1:8000/api/coupon?code=" + code + "&subtotal=" + subtotal;
+            const res = await fetch(url);
+            const resJson = await res.json();
+            discount = resJson['discount']
+            return discount
+        }
+    </script>
+    <script defer>
+        var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+        var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+        var grammar = '#JSGF V1.0;'
+
+        var recognition = new SpeechRecognition();
+        var speechRecognitionList = new SpeechGrammarList();
+        speechRecognitionList.addFromString(grammar, 1);
+        recognition.grammars = speechRecognitionList;
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.continuous = true;
+
+        recognition.onresult = function (event) {
+            var last = event.results.length - 1;
+            var command = event.results[last][0].transcript;
+            arr = command.split(" ")
+            arr2 = command.split("")
+            console.log(arr2[0]);
+            if (command.trim() == "end") {
+                recognition.stop()
+            }
+            else if (command.trim() == "home") {
+                window.location = "/homes"
+            }
+            else if (command.trim() == "products") {
+                window.location = "/products"
+            }
+            else if (command.trim() == "cart") {
+                window.location = "/cart"
+            }
+            else if (command.trim() == "profile") {
+                window.location = "/user"
+            }
+            else if (command.trim() == "login") {
+                window.location = "/login"
+            }
+            else if (command.trim() == "about") {
+                window.location = "/about"
+            }
+            else if (arr[0] == "search") {
+                console.log(arr[0])
+                console.log(arr.length)
+                if (arr.length <= 2) {
+                    document.getElementById("search").value = arr[1]
+                }
+                else {
+                    search = ""
+                    for (let index = 1; index < arr.length; index++) {
+                        if (index == arr.length - 1) {
+
+                        }
+                        else {
+                            search += " " + arr[index]
+                        }
+
+                    }
+                    console.log(search);
+                    document.getElementById("search").value = search
+
+                }
+                //document.getElementById("searchBtn").click()
+            }
+            else {
+                console.log(command)
+            }
+        };
+
+        recognition.onspeechend = function () {
+            console.log("end")
+        };
+
+        recognition.onerror = function (event) {
+
+        }
+
+        function Recording() {
+            recognition.start()
+        }
+        window.onload = Recording()
+    </script>
+</body>
+
+</html>
